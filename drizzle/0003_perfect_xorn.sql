@@ -1,0 +1,1 @@
+ALTER TABLE `player_profiles` ADD `language_preference` text DEFAULT 'vi' NOT NULL;

@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1787664319701,
+      "tag": "0000_previous_gamma_corps",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787669948081,
+      "tag": "0001_amazing_mandrill",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789069695972,
+      "tag": "0002_misty_lila_cheney",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789748403192,
+      "tag": "0003_perfect_xorn",
+      "breakpoints": true
+    }
+  ]
+}

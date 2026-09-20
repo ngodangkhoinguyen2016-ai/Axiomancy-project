@@ -1,0 +1,134 @@
+@media (min-width: 901px) {
+  .v2-next-cards { top: 45%; bottom: auto; }
+  .v2-hand { width: min(860px,calc(100% - 500px)); }
+}
+
+@media (max-width: 1180px) {
+  .v2-hub-top .v2-currency small { display: none; }
+  .v2-hub-top .v2-currency { padding: 6px; }
+  .v2-sync { display: none; }
+  .v2-deck-shell { grid-template-columns: minmax(0,1fr) minmax(340px,.75fr); }
+  .v2-deck-slots { grid-template-columns: repeat(4,minmax(100px,1fr)); }
+  .v2-collection-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .v2-skill-grid { grid-template-columns: repeat(4,minmax(145px,1fr)); }
+  .v2-next-cards { right: 16px; top: 45%; bottom: auto; width: 185px; }
+  .v2-hand { width: min(780px,calc(100% - 430px)); }
+}
+
+@media (max-width: 900px) {
+  .v2-header { height: auto; min-height: 68px; padding: 9px 12px; }
+  .v2-header .screen-header-left, .v2-header .screen-header-left > div { min-width: 0; }
+  .v2-header h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .v2-header-actions .v2-currencies { display: none; }
+  .v2-chapter-shell { height: auto; min-height: calc(100svh - 68px); grid-template-columns: 1fr; }
+  .v2-chapter-list { padding: 15px; border-right: 0; border-bottom: 1px solid var(--ui-line); }
+  .v2-chapter-list h2 { margin-bottom: 12px; }
+  .v2-chapter-list > button { display: inline-grid; width: calc(50% - 6px); margin-right: 6px; vertical-align: top; }
+  .v2-stage-map { padding: 22px 15px; overflow: visible; }
+  .v2-stage-route { grid-template-columns: 1fr 1fr; }
+  .v2-deck-shell { height: auto; min-height: calc(100svh - 68px); grid-template-columns: 1fr; overflow: visible; }
+  .v2-active-deck, .v2-collection { overflow: visible; }
+  .v2-deck-slots { grid-template-columns: repeat(4,1fr); }
+  .v2-deck-slots button { height: 160px; }
+  .v2-collection-grid { grid-template-columns: repeat(4,1fr); }
+  .v2-card-face.compact { height: 200px; }
+  .v2-collection > header { position: static; margin: 0 0 15px; padding: 0; background: transparent; }
+  .v2-skill-shell { height: auto; grid-template-columns: 1fr; }
+  .v2-skill-branches { padding: 18px; border-right: 0; border-bottom: 1px solid var(--ui-line); }
+  .v2-skill-branches h2 { margin-bottom: 12px; }
+  .v2-skill-branches > button { display: inline-grid; width: calc(50% - 6px); margin-right: 6px; vertical-align: top; }
+  .v2-skill-cost-note { max-width: 420px; }
+  .v2-skill-route { overflow: visible; }
+  .v2-skill-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .v2-quest-shell { height: auto; }
+  .v2-quest-hero { grid-template-columns: 1fr auto; }
+  .v2-quest-total { display: none; }
+  .v2-quest-grid { grid-template-columns: 1fr; }
+  .v2-login-grid { grid-template-columns: repeat(4,1fr); }
+  .v2-combat { min-height: 920px; }
+  .v2-next-cards { right: 14px; top: auto; bottom: 235px; width: 210px; }
+  .v2-hand { bottom: 64px; width: calc(100% - 24px); grid-template-columns: repeat(5,minmax(120px,1fr)); overflow-x: auto; padding: 12px; }
+  .v2-battle-card { height: 155px; }
+  .v2-combat-controls { bottom: 0; }
+  .v2-combat .player-combat-panel { bottom: 250px; }
+  .v2-combat .combat-equation { top: 390px; }
+  .v2-combat .combat-enemy { top: 75px; }
+}
+
+@media (max-width: 650px) {
+  .v2-modal-backdrop { padding: 10px; }
+  .v2-modal { max-height: calc(100svh - 20px); }
+  .v2-modal > header { min-height: 68px; padding: 14px; }
+  .v2-info, .v2-auth, .v2-settings, .v2-share, .v2-daily { padding: 16px; }
+  .v2-rate-table { grid-template-columns: repeat(2,1fr); }
+  .v2-hub-top .v2-currencies { display: none; }
+  .v2-hub-top .player-bar { gap: 5px; }
+  .v2-hub-top .icon-button { width: 34px; height: 34px; }
+  .v2-hub-footer { height: 240px; }
+  .v2-chapter-list > button, .v2-skill-branches > button { width: 100%; margin-right: 0; }
+  .v2-stage-map > header { align-items: flex-start; }
+  .v2-chapter-progress { display: none; }
+  .v2-stage-route { grid-template-columns: 1fr; }
+  .v2-stage-node.boss { grid-column: auto; }
+  .v2-deck-shell { padding: 10px; }
+  .v2-active-deck, .v2-collection { padding: 14px; }
+  .v2-active-deck > header, .v2-collection > header { display: block; }
+  .v2-deck-stats, .v2-collection label { margin-top: 12px; }
+  .v2-deck-slots { grid-template-columns: repeat(2,1fr); }
+  .v2-deck-slots button { height: 150px; }
+  .v2-deck-save { align-items: stretch; flex-direction: column; }
+  .v2-collection-grid { grid-template-columns: repeat(2,1fr); }
+  .v2-skill-route { padding: 20px 12px; }
+  .v2-skill-route > header > div > span { display: none; }
+  .v2-skill-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .v2-skill-node { min-height: 150px; }
+  .v2-tier-legend { gap: 7px; }
+  .v2-quest-hero { display: block; }
+  .v2-quest-tabs { margin-top: 15px; }
+  .v2-quest-grid article { grid-template-columns: 42px 1fr; }
+  .v2-quest-icon { width: 40px; height: 40px; }
+  .v2-quest-grid article > button { grid-column: 1/-1; }
+  .v2-quest-footer em { display: none; }
+  .v2-login-grid { grid-template-columns: repeat(2,1fr); }
+  .v2-login-grid > div { min-height: 110px; }
+  .v2-pity-grid { grid-template-columns: 1fr; }
+  .v2-portal-scene { height: 980px; }
+  .v2-portal-scene .arcane-portal { top: 23%; }
+  .v2-portal-scene .portal-copy { top: 44%; }
+  .v2-summon-actions { top: 77%; width: calc(100% - 28px); }
+  .v2-summon-actions .summon-button { flex: 1; min-width: 0; }
+  .v2-rarity-key { bottom: 7px; }
+  .v2-combat { min-height: 980px; }
+  .v2-combat-head-actions > span { display: none; }
+  .v2-combat .combat-equation { top: 390px; }
+  .v2-combat .player-combat-panel { bottom: 290px; }
+  .v2-next-cards { left: 14px; right: 14px; top: auto; bottom: 205px; width: auto; }
+  .v2-next-cards > div > div { height: 62px; }
+  .v2-hand { bottom: 54px; grid-template-columns: repeat(5,112px); }
+  .v2-battle-card { height: 145px; padding: 8px; }
+  .v2-battle-card > strong { height: 48px; font-size: 35px; }
+  .v2-battle-card p { font-size: 5px; }
+  .v2-combat-controls .deck-counter { display: none; }
+}
+
+@media (max-width: 420px) {
+  .v2-header .screen-header-left .brand-mark, .v2-header .header-divider { display: none; }
+  .v2-header h1 { max-width: 180px; }
+  .v2-corner-tools { right: 12px; top: 12px; }
+  .v2-rate-table { grid-template-columns: 1fr; }
+  .v2-skill-grid { grid-template-columns: 1fr; }
+  .v2-collection-grid { grid-template-columns: 1fr 1fr; }
+  .v2-card-face.compact { height: 190px; }
+  .v2-stage-map h1 { font-size: 31px; }
+  .v2-combat .combat-equation { top: 380px; }
+  .v2-combat .player-combat-panel { bottom: 300px; }
+  .v2-next-cards { bottom: 210px; }
+  .v2-hand { grid-template-columns: repeat(5,105px); }
+}
+
+.reduce-vfx *, .reduce-vfx *::before, .reduce-vfx *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: .01ms !important;
+}

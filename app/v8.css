@@ -1,0 +1,62 @@
+.v8-resource-bar { gap: 7px; flex-wrap: wrap; }
+.v8-resource-bar .v2-currency { min-height: 38px; padding: 7px 11px; font-size: 13px; }
+.v8-resource-bar .v2-currency svg { width: 19px; height: 19px; }
+.v8-resource-bar .v2-currency small { font-size: 8px; }
+.v2-currency.standard-ticket { color: #80e5ff; }
+
+.v2-chapter-list button:disabled,
+.v2-stage-node.locked,
+.v3-tower-entry.locked { opacity: .5; filter: grayscale(.85); cursor: not-allowed; pointer-events: none; }
+.v2-stage-node.boss.unlocked { border-color: #c77bff80; background: radial-gradient(circle at 12% 50%, #8e45b824, transparent 36%), #151126e8; animation: v8BossPulse 2.2s ease-in-out infinite; }
+.v8-stage-rewards { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+.v8-stage-rewards em { display: inline-flex; align-items: center; gap: 4px; padding: 5px 7px; border: 1px solid #ffffff18; border-radius: 999px; color: #bac5df; background: #ffffff07; font-size: 9px; font-style: normal; }
+.v8-stage-rewards em:nth-child(1) { color: #b8a4ff; }.v8-stage-rewards em:nth-child(2) { color: #ffd26f; }.v8-stage-rewards em:nth-child(3) { color: #74e7ff; }
+.v8-boss-warning { display: flex; align-items: center; gap: 6px; width: max-content; max-width: 100%; margin-top: 8px; padding: 5px 8px; border: 1px solid #ff6d9661; border-radius: 7px; color: #ffabc0; background: #a72b4a17; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+.v8-tower-loading { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 340px; color: #8feaff; font-weight: 700; }
+.v8-tower-loading svg, .v8-profile-loading svg { animation: v8Spin 1s linear infinite; }
+
+.v8-ticket-exchange { position: absolute; z-index: 12; top: 84px; right: 24px; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #79dcff52; border-radius: 12px; color: #b8efff; background: #0c1830e8; box-shadow: 0 12px 35px #0006; cursor: pointer; }
+.v8-ticket-exchange span { display: grid; gap: 2px; text-align: left; }.v8-ticket-exchange strong { color: white; font-size: 11px; }.v8-ticket-exchange small { color: #8db4cd; font-size: 9px; }.v8-ticket-exchange:disabled { opacity: .45; cursor: not-allowed; }
+
+.v8-quest-hero { align-items: center; }
+.v8-quest-milestone { display: flex; align-items: center; gap: 11px; min-width: 260px; padding: 12px; border: 1px solid #ffffff22; border-radius: 13px; color: #aab5d0; background: #10152a; text-align: left; cursor: pointer; }
+.v8-quest-milestone > span { display: grid; flex: 1; gap: 4px; }.v8-quest-milestone strong { color: white; font-size: 11px; letter-spacing: .08em; }.v8-quest-milestone small { font-size: 9px; }.v8-quest-milestone i { height: 5px; overflow: hidden; border-radius: 99px; background: #ffffff0e; }.v8-quest-milestone i em { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5bcbff, #b980ff); }.v8-quest-milestone b { color: #ffd77d; font-size: 9px; }.v8-quest-milestone.ready:not(.claimed) { border-color: #ffd06d82; color: #ffda85; box-shadow: 0 0 24px #ffc34c25; animation: v8Milestone 1.8s ease-in-out infinite; }.v8-quest-milestone.claimed { opacity: .55; }
+
+.v8-scholar-link { padding: 0; border: 0; color: #f3f7ff; background: transparent; font: inherit; font-weight: 800; cursor: pointer; text-align: left; }.v8-scholar-link:hover { color: #79e5ff; text-decoration: underline; }
+.v8-triumvirate { color: #84eaff !important; text-shadow: 0 0 12px #67dfff66; }
+.v8-player-card { min-height: 260px; }
+.v8-player-card > header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px; padding: 20px; border: 1px solid #ffffff20; border-radius: 17px; background: radial-gradient(circle at 10% 20%, #6dddf318, transparent 38%), #11172a; }
+.v8-player-card > header > div:nth-child(2) { display: grid; gap: 4px; }.v8-player-card h2 { margin: 0; font: 500 34px Georgia, serif; }.v8-player-card header strong { color: #ffe09d; }.v8-player-card header small, .v8-player-card header span { color: #8e9ab8; font-size: 9px; letter-spacing: .1em; }
+.v8-profile-avatar { position: relative; display: grid; place-items: center; width: 82px; height: 82px; border-radius: 50%; }
+.v8-player-card > header > div:last-child { display: grid; grid-template-columns: auto auto; gap: 3px 10px; text-align: right; }.v8-player-card > header > div:last-child b { color: #83e8ff; font-size: 20px; }
+.v8-player-card > section { margin-top: 18px; }.v8-player-card > section > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }.v8-player-card section article { display: grid; gap: 5px; padding: 15px; border: 1px solid #ffffff20; border-radius: 13px; background: #11162a; }.v8-player-card section article > strong { font-size: 28px; }.v8-player-card section article > span { font-weight: 800; }.v8-player-card section article > small { color: #8e9ab8; }.v8-player-card section article > p { margin: 4px 0 0; color: #b1bdd6; font-size: 11px; line-height: 1.5; }
+.v8-profile-loading, .v8-profile-error, .v8-empty-profile { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 180px; color: #9eabc6; }.v8-profile-error { color: #ff9bab; }
+.frame-gold-frame { border: 3px solid transparent !important; background: linear-gradient(#11172a, #11172a) padding-box, linear-gradient(120deg, #845d17, #fff0a4, #c88b2a, #fff7c9, #845d17) border-box !important; background-size: 100% 100%, 240% 100% !important; box-shadow: 0 0 24px #f2c45f66, inset 0 0 18px #f2c45f28 !important; animation: v8GoldShine 3s linear infinite; }
+.frame-quantum-fire { border: 3px solid #71e8ff !important; box-shadow: 0 0 18px #63dfff88, 0 0 38px #9c5dff66, inset 0 0 20px #6b8fff30 !important; animation: v8QuantumFire 1.8s ease-in-out infinite; }
+.frame-quantum-fire::before, .frame-quantum-fire::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #c478ff; box-shadow: 25px -33px #65edff, -28px 27px #9d73ff, 32px 22px #67dfff; animation: v8Particles 2.4s linear infinite; }
+.frame-quantum-fire::after { animation-delay: -1.2s; transform: rotate(120deg); }
+
+.v5-hand-ratio { max-width: 240px; }.v5-hand-ratio span { white-space: nowrap; }
+
+@keyframes v8Spin { to { transform: rotate(360deg); } }
+@keyframes v8BossPulse { 50% { border-color: #ff4b778c; box-shadow: 0 0 24px #b83b7a30; } }
+@keyframes v8Milestone { 50% { box-shadow: 0 0 35px #ffc34c48; } }
+@keyframes v8GoldShine { to { background-position: 0 0, -240% 0; } }
+@keyframes v8QuantumFire { 50% { box-shadow: 0 0 28px #63dfffb0, 0 0 52px #9c5dff88, inset 0 0 25px #6b8fff42; } }
+@keyframes v8Particles { to { transform: rotate(360deg) translateY(-8px); opacity: .35; } }
+
+@media (max-width: 1180px) {
+  .v8-resource-bar { max-width: 520px; justify-content: flex-end; }
+  .v8-resource-bar .v2-currency { min-height: 32px; padding: 5px 8px; font-size: 11px; }
+  .v8-ticket-exchange { position: static; width: max-content; margin: 12px 18px 0 auto; }
+  .v8-quest-hero { align-items: stretch; flex-wrap: wrap; }
+}
+@media (max-width: 760px) {
+  .v8-resource-bar { max-width: none; justify-content: flex-start; }
+  .v8-resource-bar .v2-currency { flex: 1 1 92px; justify-content: center; }
+  .v8-player-card > header { grid-template-columns: auto 1fr; }.v8-player-card > header > div:last-child { grid-column: 1 / -1; text-align: left; }
+  .v8-player-card > section > div { grid-template-columns: 1fr; }
+  .v8-ticket-exchange { width: calc(100% - 24px); margin: 10px 12px; justify-content: center; }
+  .v8-quest-milestone { min-width: 0; width: 100%; }
+}

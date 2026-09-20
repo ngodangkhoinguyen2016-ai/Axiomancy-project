@@ -1,0 +1,199 @@
+/* Advanced viewport and containment pass. Keep all sizing inside component bounds. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, .axiom-app, .game-screen { max-width: 100%; }
+
+/* Gacha: the pity rows and summon results must never escape the banner stage. */
+.v6-summon,
+.v6-summon-shell,
+.v6-banner-nav,
+.v6-banner-stage,
+.v6-pity-strip,
+.v6-pity-strip > span,
+.v6-summon-results,
+.v6-summon-results header,
+.v6-summon-results footer { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.v6-banner-stage { overflow-x: hidden; overflow-y: auto; }
+.v8-ticket-exchange {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: max-content;
+  max-width: calc(100% - 36px);
+  margin: 10px 18px 0 auto;
+}
+.v8-ticket-exchange span,
+.v8-ticket-exchange strong,
+.v8-ticket-exchange small { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.v6-summon:has(.v8-ticket-exchange) { overflow: auto; }
+.v6-summon:has(.v8-ticket-exchange) .v6-summon-shell { height: calc(100svh - 138px); min-height: 650px; }
+.v6-pity-strip {
+  inset-inline: 24px;
+  width: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.v6-pity-strip > span {
+  grid-template-columns: auto minmax(0, auto) minmax(40px, auto) minmax(70px, 1fr);
+  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.v6-pity-strip > span > i { min-width: 0; width: 100%; max-width: 100%; overflow: hidden; }
+.v6-featured-copy,
+.v6-featured-copy p,
+.v6-featured-copy h1,
+.v6-summon-results p,
+.v6-summon-results h2,
+.result-card,
+.result-card p,
+.result-card span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+
+/* Quest Archive: flexible two-column cards become one column before they clip. */
+.v2-quest-shell,
+.v2-quest-hero,
+.v2-quest-hero > *,
+.v2-quest-grid,
+.v2-quest-grid article,
+.v2-quest-copy,
+.v8-quest-milestone,
+.v8-quest-milestone > span,
+.v2-quest-footer { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.v2-quest-hero.v8-quest-hero { grid-template-columns: minmax(0, 1fr) auto minmax(220px, 280px); }
+.v2-quest-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.v2-quest-grid article {
+  flex: 1 1 calc(50% - 8px);
+  width: calc(50% - 8px);
+  grid-template-columns: 52px minmax(0, 1fr) minmax(76px, 90px);
+}
+.v2-quest-copy p,
+.v2-quest-copy h2,
+.v2-quest-reward,
+.v8-quest-milestone strong,
+.v8-quest-milestone small,
+.v8-quest-milestone b,
+.v2-quest-footer span,
+.v2-quest-footer em {
+  max-width: 100%;
+  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.v2-quest-progress,
+.v2-quest-progress .meter,
+.v8-quest-milestone i { min-width: 0; max-width: 100%; overflow: hidden; }
+.v2-quest-footer { flex-wrap: wrap; }
+
+/* Skill Tree camera: a bounded viewport over a large, composited canvas. */
+.v9-skill-map { position: relative; min-width: 0; }
+.v9-skill-controls {
+  position: absolute;
+  z-index: 20;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid #8bccef36;
+  border-radius: 12px;
+  background: #090e1de8;
+  box-shadow: 0 12px 30px #0008;
+  backdrop-filter: blur(12px);
+}
+.v9-skill-controls > span { display: flex; align-items: center; gap: 6px; padding: 0 8px; color: #92a3c7; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.v9-skill-controls button { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid #ffffff1c; border-radius: 8px; color: #dcecff; background: #ffffff09; cursor: pointer; }
+.v9-skill-controls button:hover { border-color: #74dcff75; color: #85e7ff; background: #63d9ff17; }
+.v9-skill-controls output { min-width: 42px; color: #90e8ff; font-size: 10px; font-weight: 800; text-align: center; }
+.v9-skill-viewport {
+  position: relative;
+  width: 100%;
+  height: min(80vh, 760px);
+  min-height: 590px;
+  overflow: hidden;
+  border: 1px solid #ffffff17;
+  border-radius: 24px;
+  background: radial-gradient(circle at center, #202b50 0, #11162b 34%, #090d1a 72%);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  overscroll-behavior: contain;
+}
+.v9-skill-viewport:active,
+.v9-skill-viewport.dragging { cursor: grabbing; }
+.v9-skill-canvas {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: 1600px;
+  height: 1600px;
+  transform-origin: center center;
+  will-change: transform;
+}
+.v9-skill-canvas .v7-radial-node {
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--node-radius)) rotate(calc(-1 * var(--angle)));
+}
+.v9-skill-canvas .v7-radial-node.selected {
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--node-radius)) rotate(calc(-1 * var(--angle))) scale(1.08);
+}
+.v9-skill-help {
+  position: absolute;
+  z-index: 10;
+  left: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% - 28px);
+  padding: 8px 11px;
+  border: 1px solid #ffffff16;
+  border-radius: 10px;
+  color: #8998b9;
+  background: #080d1bdb;
+  font-size: 9px;
+  pointer-events: none;
+}
+.v9-skill-help span + span { padding-left: 10px; border-left: 1px solid #ffffff1a; }
+
+@media (max-width: 1100px) {
+  .v2-quest-hero.v8-quest-hero { grid-template-columns: minmax(0, 1fr) auto; }
+  .v8-quest-milestone { grid-column: 1 / -1; width: 100%; }
+  .v9-skill-viewport { height: 70vh; }
+}
+
+@media (max-width: 760px) {
+  .v6-banner-stage { overflow: visible; }
+  .v6-summon:has(.v8-ticket-exchange) .v6-summon-shell { height: auto; min-height: calc(100svh - 70px); }
+  .v8-ticket-exchange { width: calc(100% - 24px); max-width: none; margin: 10px 12px; }
+  .v6-pity-strip { inset-inline: 10px; grid-template-columns: 1fr; gap: 8px; }
+  .v6-pity-strip > span { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .v6-pity-strip > span > i { grid-column: 1 / -1; }
+  .v6-banner-stage { padding-top: 94px; }
+  .v6-summon-actions { width: 100%; max-width: 100%; }
+  .v2-quest-hero.v8-quest-hero { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .v2-quest-tabs { width: 100%; }
+  .v2-quest-tabs button { flex: 1; }
+  .v2-quest-grid article { flex-basis: 100%; width: 100%; grid-template-columns: 42px minmax(0, 1fr); }
+  .v2-quest-grid article > button { grid-column: 1 / -1; width: 100%; }
+  .v2-quest-footer em { width: 100%; margin-left: 23px; }
+  .v9-skill-controls { left: 10px; right: 10px; justify-content: center; }
+  .v9-skill-controls > span { display: none; }
+  .v9-skill-viewport { height: 66vh; min-height: 520px; overflow: hidden; }
+  .v9-skill-canvas { width: 1300px; height: 1300px; }
+  .v9-skill-canvas .v7-radial-branch > header { display: flex; }
+  .v9-skill-help { right: 10px; left: 10px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .v9-skill-help span + span { display: none; }
+  .v6-summon-actions { grid-template-columns: 1fr; }
+  .v2-quest-shell { padding-inline: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v9-skill-canvas { will-change: auto; }
+}

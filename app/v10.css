@@ -1,0 +1,118 @@
+/* 2026-09-18 interaction, localization, and card-rendering pass. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* --- Skill Tree: bounded camera + constellation canvas --- */
+.v7-skill-shell { position: relative; display: block; width: min(1540px, calc(100% - 32px)); min-height: min(80vh, 780px); }
+.v9-skill-map { min-height: min(80vh, 780px); }
+.v9-skill-controls { right: auto; left: 14px; }
+.v9-skill-viewport { width: 100%; height: min(80vh, 780px); min-height: 620px; overflow: hidden; }
+.v9-skill-canvas { width: 3000px; height: 3000px; transform: translate(-50%, -50%); transform-origin: center; }
+.v10-skill-links { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.v10-skill-links line { stroke: #4a5873; stroke-width: 3; opacity: .28; transition: stroke .25s ease, opacity .25s ease, filter .25s ease; }
+.v10-skill-links line.available { stroke: #77c9ef; opacity: .68; stroke-dasharray: 9 8; }
+.v10-skill-links line.unlocked { stroke: #71e8bc; opacity: .95; filter: drop-shadow(0 0 5px #5cf1ba88); }
+.v7-radial-rings { z-index: 0; }
+.v7-radial-rings i:nth-child(1) { width: 300px; }
+.v7-radial-rings i:nth-child(2) { width: 484px; }
+.v7-radial-rings i:nth-child(3) { width: 668px; }
+.v7-radial-rings i:nth-child(4) { width: 852px; }
+.v7-radial-rings i:nth-child(5) { width: 1036px; }
+.v7-radial-rings i:nth-child(6) { width: 1220px; }
+.v7-radial-branch > header { z-index: 2; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(800px) rotate(calc(-1 * var(--angle))); }
+.v9-skill-canvas .v7-radial-node { width: 62px; height: 62px; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--node-radius)) rotate(calc(-1 * var(--angle))); isolation: isolate; }
+.v9-skill-canvas .v7-radial-node > span { width: 35px; height: 35px; background: #ffffff0b; }
+.v9-skill-canvas .v7-radial-node small { display: none; }
+.v9-skill-canvas .v7-radial-node.locked { opacity: .4; filter: grayscale(1); cursor: not-allowed; }
+.v9-skill-canvas .v7-radial-node.available { color: #dff7ff; border-color: #75dfff; animation: v10NodeReady 1.9s ease-in-out infinite; }
+.v9-skill-canvas .v7-radial-node.unlocked { color: #b5ffe2; border-color: #71e8bc; background: #12372f; box-shadow: 0 0 13px #60efb356, inset 0 0 12px #67eab72b; }
+.v9-skill-canvas .v7-radial-node.selected { transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--node-radius)) rotate(calc(-1 * var(--angle))) scale(1.11); outline-color: #ffffffd9; }
+.v10-skill-inspector { position: absolute; z-index: 50; top: 0; right: 0; width: min(370px, calc(100% - 36px)); max-height: calc(100% - 18px); overflow: auto; visibility: hidden; opacity: 0; transform: translateX(18px); transition: .22s ease; box-shadow: 0 24px 70px #000b; backdrop-filter: blur(18px); }
+.v10-skill-inspector.open { visibility: visible; opacity: 1; transform: none; }
+.v10-inspector-close { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 32px; height: 32px; color: #aebbd5; border: 1px solid #ffffff1b; border-radius: 8px; background: #ffffff08; cursor: pointer; }
+.v10-skill-level { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px; border: 1px solid #ffffff14; border-radius: 10px; background: #ffffff06; }
+.v10-skill-level span { color: #8492b1; font-size: 9px; letter-spacing: .1em; }
+.v10-skill-level strong { color: #f5f8ff; }
+.v10-skill-level em { grid-column: 1 / -1; color: #a9b6d0; font-size: 10px; font-style: normal; }
+@keyframes v10NodeReady { 50% { box-shadow: 0 0 22px #68dcff66, inset 0 0 10px #68dcff25; } }
+
+/* --- Cards: hard clipping, isolated layers, and subject-specific Mythic identity --- */
+.card-container { position: relative; overflow: hidden !important; isolation: isolate; background: #0f141c !important; }
+.card-container .card-layer { position: absolute; inset: 0; }
+.card-container .card-layer-background { z-index: 0; background: linear-gradient(155deg, color-mix(in srgb, var(--rarity, #8799c9), #1d2432 82%), #0f141c 74%); }
+.card-container .card-layer-vfx { z-index: 1; opacity: .36; overflow: hidden; pointer-events: none; }
+.card-container .card-layer-content { z-index: 2; display: flex; flex-direction: column; align-items: center; padding: 10px; color: #f7f9ff; text-shadow: 0 2px 4px rgba(0,0,0,.9); }
+.card-container .card-layer-content > strong { height: 78px; display: grid; place-items: center; font: 48px Georgia, serif; }
+.card-container .card-layer-content h3 { margin: 2px 0 3px; font-size: 9px; text-align: center; }
+.card-container .card-layer-content > small { color: #aab4c8; font-size: 6px; }
+.card-container .card-layer-content p { margin: 9px 0 0; color: #d1d6e2; font-size: 6px; line-height: 1.45; text-align: center; }
+.card-container.rarity-epic { --rarity: #9D4EDD; border-color: #9D4EDD !important; box-shadow: inset 0 0 14px #9d4edd4d; }
+.card-container.rarity-legendary { --rarity: #FFD700; border-color: #FFD700 !important; box-shadow: inset 0 0 15px rgba(255,215,0,.5); }
+.card-container.rarity-mythic { border-color: color-mix(in srgb, var(--rarity), white 20%); }
+.card-container.rarity-mythic.subject-mathematics .card-layer-vfx { background-image: linear-gradient(#61dcff50 1px, transparent 1px), linear-gradient(90deg, #61dcff50 1px, transparent 1px), radial-gradient(circle at 50% 50%, #b16dff90, transparent 58%); background-size: 18px 18px, 18px 18px, 100% 100%; animation: v10GridDrift 7s linear infinite; }
+.card-container.rarity-mythic.subject-physics .card-layer-vfx { inset: 3px; border: 2px solid #70c8ff; border-radius: inherit; box-shadow: inset 0 0 18px #4abaff, 0 0 12px #975cff; animation: v10Lightning 1.25s steps(2) infinite; }
+.card-container.rarity-mythic.subject-chemistry .card-layer-vfx { background: radial-gradient(circle at 50% 110%, #19e896aa, transparent 65%); }
+.card-container.rarity-mythic.subject-chemistry .card-layer-vfx i { position: absolute; bottom: -18px; width: 18px; height: 18px; border: 2px solid #80ffd2; border-radius: 50%; animation: v10Bubble 3.4s ease-in infinite; }
+.card-container.rarity-mythic.subject-chemistry .card-layer-vfx i:nth-child(1) { left: 18%; animation-delay: -.4s; }.card-container.rarity-mythic.subject-chemistry .card-layer-vfx i:nth-child(2) { left: 52%; width: 11px; height: 11px; animation-delay: -1.6s; }.card-container.rarity-mythic.subject-chemistry .card-layer-vfx i:nth-child(3) { left: 78%; width: 24px; height: 24px; animation-delay: -2.5s; }
+.card-container.rarity-mythic.subject-biology .card-layer-vfx { background: repeating-radial-gradient(ellipse at 35% 50%, #74ffbb 0 3px, transparent 4px 15px), repeating-radial-gradient(ellipse at 65% 50%, #69bfff 0 3px, transparent 4px 15px); background-size: 52px 34px; animation: v10DnaPulse 2.4s ease-in-out infinite; }
+.v2-battle-card, .v4-arena-hand > button, .result-card { overflow: hidden !important; isolation: isolate; }
+.v2-battle-card::before, .v4-arena-hand > button::before, .result-card::before { content: ""; position: absolute; z-index: 0; inset: 0; opacity: .32; background: radial-gradient(circle at 50% 0, var(--rarity, #8799c9), transparent 62%); pointer-events: none; }
+.v2-battle-card > *, .v4-arena-hand > button > *, .result-card > * { position: relative; z-index: 2; text-shadow: 0 2px 4px #000e; }
+.v2-battle-card.rarity-legendary, .v4-arena-hand > button.rarity-legendary, .result-card.rarity-legendary { --rarity: #FFD700; border-color: #FFD700; box-shadow: inset 0 0 15px rgba(255,215,0,.5); }
+.v2-battle-card.rarity-epic, .v4-arena-hand > button.rarity-epic, .result-card.rarity-epic { --rarity: #9D4EDD; border-color: #9D4EDD; }
+@keyframes v10GridDrift { to { background-position: 36px 18px, 18px 36px, 0 0; } }
+@keyframes v10Lightning { 45% { filter: brightness(1.45); box-shadow: inset 9px -4px 20px #4abaff, -3px 0 14px #c25cff; } 52% { filter: brightness(.9); } }
+@keyframes v10Bubble { to { transform: translateY(-270px) scale(.45); opacity: 0; } }
+@keyframes v10DnaPulse { 50% { opacity: .58; filter: hue-rotate(35deg); transform: scale(1.06); } }
+
+/* --- Mandatory FTUE --- */
+.v10-ftue-panel { width: min(690px, calc(100% - 30px)); max-height: calc(100svh - 98px); overflow: auto; }
+.v10-grade-select { display: grid; gap: 9px; padding: 12px; border: 1px solid #7bdfff31; border-radius: 12px; background: #4acaff0b; }
+.v10-grade-select > span { color: #8edff5; font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.v10-grade-select > div { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.v10-grade-select button { min-height: 40px; display: flex; align-items: center; justify-content: center; gap: 5px; color: #9cabc7; border: 1px solid #ffffff18; border-radius: 8px; background: #ffffff06; cursor: pointer; }
+.v10-grade-select button.active { color: #0e2530; border-color: #93efff; background: #8eeaff; font-weight: 800; }
+.v10-resource-tutorial { display: grid; gap: 8px; }.v10-resource-tutorial .v2-currencies { position: static; flex-wrap: wrap; }.v10-resource-tutorial p { margin: 0; color: #9eabc4; font-size: 11px; }
+.v10-deck-drag { display: grid; grid-template-columns: 1fr 110px 150px; gap: 10px; align-items: stretch; }
+.v10-deck-drag .v7-ftue-proof { margin: 0; }
+.v10-tutorial-card, .v10-deck-slot { min-height: 126px; display: grid; place-items: center; gap: 3px; padding: 9px; color: #dfeaff; border: 1px solid #6dcff05e; border-radius: 11px; background: linear-gradient(155deg,#273457,#101626); text-align: center; }
+.v10-tutorial-card { cursor: grab; }.v10-tutorial-card strong { font: 34px Georgia,serif; }.v10-tutorial-card span { font-size: 9px; }.v10-tutorial-card small { color: #8090b3; font-size: 7px; }
+.v10-deck-slot { border-style: dashed; color: #7b8ba9; }.v10-deck-slot.filled { color: #7eebbc; border-style: solid; border-color: #71e8bc; background: #12372f; }
+.v10-ftue-demo { display: grid; gap: 9px; }.v10-ftue-demo > div:first-of-type { display: flex; justify-content: center; gap: 8px; }.v10-ftue-demo > div:first-of-type button { width: 58px; height: 72px; }
+.v10-ftue-ap { display: flex !important; align-items: center; justify-content: center; gap: 10px; }.v10-ftue-ap > div { display: flex; gap: 5px; }.v10-ftue-ap i { width: 13px; height: 13px; border: 1px solid #65cfff; border-radius: 50%; }.v10-ftue-ap i.active { background: #65cfff; box-shadow: 0 0 10px #65cfff; }
+.v10-ftue-feature { display: grid; grid-template-columns: auto 1fr auto 1fr; gap: 11px; align-items: center; padding: 13px; border: 1px solid #ffffff17; border-radius: 12px; background: #ffffff05; }.v10-ftue-feature > svg { color: #82deff; }.v10-ftue-feature div { display: grid; gap: 3px; }.v10-ftue-feature strong { font-size: 12px; }.v10-ftue-feature span { color: #929fba; font-size: 9px; }
+
+/* --- Language preference --- */
+.v10-language-choice { display: grid; gap: 9px; padding: 12px; border: 1px solid var(--ui-line); border-radius: 10px; background: rgba(255,255,255,.025); }
+.v10-language-choice > span { color: var(--ui-muted); font-size: 9px; font-weight: 800; letter-spacing: .11em; }
+.v10-language-choice > div { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.v10-language-choice button { min-height: 40px; color: var(--ui-muted); border: 1px solid var(--ui-line); border-radius: 8px; background: transparent; cursor: pointer; }
+.v10-language-choice button.active { color: #0f2630; border-color: #86e5fa; background: #8de8fa; font-weight: 800; }
+.v10-language-choice small { color: var(--ui-muted); font-size: 9px; line-height: 1.5; }
+.language-vi .end-turn-button { font-size: 0; }
+.language-vi .end-turn-button::before { content: "Bỏ lượt / Kết thúc lượt"; font-size: 10px; }
+.language-vi .v2-next-cards > span { font-size: 0; }
+.language-vi .v2-next-cards > span::after { content: "DỰ BÁO RÚT THẺ"; font-size: 8px; }
+.language-vi .v4-arena-queue > button { font-size: 0; }
+.language-vi .v4-arena-queue > button::before { content: "Bỏ lượt"; font-size: 9px; }
+
+@media (max-width: 760px) {
+  .v7-skill-shell, .v9-skill-map { min-height: 650px; }
+  .v9-skill-viewport { height: 72vh; min-height: 650px; }
+  .v9-skill-canvas { width: 2400px; height: 2400px; }
+  .v10-skill-links { width: 100%; height: 100%; }
+  .v10-skill-inspector { position: absolute; top: auto; right: 10px; bottom: 10px; left: 10px; width: auto; max-height: 58%; transform: translateY(18px); }
+  .v10-skill-inspector.open { transform: none; }
+  .v10-grade-select > div { grid-template-columns: repeat(4, 1fr); }
+  .v10-deck-drag { grid-template-columns: 1fr 1fr; }.v10-deck-drag .v7-ftue-proof { grid-column: 1 / -1; }
+  .v10-ftue-feature { grid-template-columns: auto 1fr; }
+}
+
+@media (max-width: 480px) {
+  .v10-grade-select > div { grid-template-columns: repeat(3, 1fr); }
+  .v10-ftue-panel { padding-inline: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v9-skill-canvas .v7-radial-node.available, .card-layer-vfx { animation: none !important; }
+}
